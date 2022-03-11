@@ -22,7 +22,7 @@ Add permissions & service to `android/app/src/main/AndroidManifest.xml`
 <application>
     ...
     <service
-        android:name="com.carusto.ReactNativePjSip.PjSipService"
+        android:name="one.telefon.sip2.PjSipService"
         android:enabled="true"
         android:exported="true" />
     ...
