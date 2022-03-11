@@ -19,19 +19,20 @@
 +(instancetype)instance;
 
 -(NSDictionary *)start: (NSDictionary *) config;
+-(NSDictionary *)stop: (NSDictionary *) config;
 
 -(void) updateStunServers: (int) accountId stunServerList:(NSArray *)stunServerList;
 
 -(PjSipAccount *)createAccount:(NSDictionary*) config;
 -(void) deleteAccount:(int) accountId;
+-(NSMutableArray *)getAccounts;
 -(PjSipAccount *)findAccount:(int)accountId;
 -(PjSipCall *)makeCall:(PjSipAccount *) account destination:(NSString *)destination callSettings: (NSDictionary *)callSettings msgData: (NSDictionary *)msgData;
 -(void)pauseParallelCalls:(PjSipCall*) call; // TODO: Remove this feature.
 -(PjSipCall *)findCall:(int)callId;
 -(void)useSpeaker;
 -(void)useEarpiece;
--(void)sendMessage:(PjSipAccount *) account destination:(NSString *)destination msg:(NSString *)msg ;
--(void)imTyping:(PjSipAccount *) account destination:(NSString *)destination is_typing:(BOOL *)is_typing ;
+
 -(void)changeOrientation: (NSString*) orientation;
 -(void)changeCodecSettings: (NSDictionary*) codecSettings;
 

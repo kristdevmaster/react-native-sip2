@@ -207,28 +207,19 @@
 }
 
 - (PjSipAccount *) findAccount: (int) accountId {
+    NSLog([NSString stringWithFormat: @"FINDING ACCOUNT WITH ID: %d", accountId]);
     return self.accounts[@(accountId)];
 }
 
--(void) sendMessage:(PjSipAccount *) account destination:(NSString *)destination msg:(NSString *)msg  {
-    pj_str_t mime = pj_str((char *) [@"text" UTF8String]);
-    pj_str_t content = pj_str((char *) [msg UTF8String]);
-    pj_str_t callDest = pj_str((char *) [destination UTF8String]);
+- (NSMutableArray *)getAccounts {
+    NSMutableArray *accountsResult = [[NSMutableArray alloc] initWithCapacity:[@([self.accounts count]) unsignedIntegerValue]];
 
-    pj_status_t status = pjsua_im_send(account.id, &callDest, NULL, &content, NULL, NULL);
-    if (status != PJ_SUCCESS) {
-        [NSException raise:@"Failed to send message" format:@"See device logs for more details."];        
+    for (NSString *key in self.accounts) {
+        PjSipAccount *acc = self.accounts[key];
+        [accountsResult addObject:[acc toJsonDictionary]];
     }
-}
-
--(void) imTyping:(PjSipAccount *) account destination:(NSString *)destination is_typing:(BOOL *)is_typing  {
     
-    pj_str_t callDest = pj_str((char *) [destination UTF8String]);
-    
-    pj_status_t status = pjsua_im_typing(account.id, &callDest, is_typing, NULL);
-    if (status != PJ_SUCCESS) {
-        [NSException raise:@"Failed to send is_Typing" format:@"See device logs for more details."];
-    }
+    return accountsResult;
 }
 
 
@@ -408,6 +399,7 @@ static void onCallReceived(pjsua_acc_id accId, pjsua_call_id callId, pjsip_rx_da
 
 static void onCallStateChanged(pjsua_call_id callId, pjsip_event *event) {
     PjSipEndpoint* endpoint = [PjSipEndpoint instance];
+    NSLog(@"ON CALL STATE CHANGED: %s", event->body.rx_msg.rdata);
     
     pjsua_call_info callInfo;
     pjsua_call_get_info(callId, &callInfo);
