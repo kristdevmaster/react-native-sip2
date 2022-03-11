@@ -1,12 +1,8 @@
 #!/bin/bash
-
-echo SKIP
-exit 0
-
 set -e
 
-VERSION="v3.0.0"
-URL="https://github.com/telefon-one/react-native-sip2-builder/releases/download/${VERSION}/release.tar.gz"
+VERSION="v3.0.1"
+URL="https://github.com/kristdevmaster/react-native-sip2-builder/releases/download/${VERSION}/release.tar.gz"
 LOCK=".libs.lock"
 DEST=".libs.tar.gz"
 DOWNLOAD=true
